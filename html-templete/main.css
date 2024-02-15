@@ -3,6 +3,7 @@
     margin: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    cursor: pointer;
 }
 
 .container {
@@ -120,6 +121,10 @@
     height: 42px;
     border-radius: 42px;
     justify-content: center !important;
+}
+
+.wallet-coin-option-button-send {
+    transform: rotate(45deg);
 }
 
 .wallet-coin-option-button-disabled {
