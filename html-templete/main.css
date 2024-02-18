@@ -6,7 +6,7 @@
     cursor: pointer;
 }
 
-.container {
+.app-container {
     width: 100%;
     height: 100%;
     text-align: center;
@@ -111,6 +111,7 @@
 
 .wallet-coin-option-item {
     width: 80px;
+    flex-direction: column !important;
     flex-direction: column !important;
 }
 
