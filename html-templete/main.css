@@ -187,3 +187,80 @@
 .wallet-activity-import-token {
     margin-bottom: 20px;
 }
+
+.wallet-token-item-nft {
+    padding: 16px 12px;
+}
+
+.wallet-token-item-balance-nft {
+    justify-content: start;
+    margin-bottom: 12px;
+}
+
+.wallet-token-item-logo-nft {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    margin-right: 12px;
+}
+
+.wallet-token-item-nft-body {
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.wallet-token-item-nft-item {
+    width: 15%;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    margin-right: 12px;
+}
+
+.wallet-token-item-activity-day {
+    text-align: start;
+    font-size: 18px;
+}
+
+.wallet-token-item-activity {
+    padding: 0 12px;
+    margin-bottom: 16px;
+}
+
+.wallet-token-item-activity-body-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.wallet-token-item-activity-body-details {
+    flex: 1;
+}
+
+.wallet-token-item-activity-icon {
+    color: orangered;
+    transform: rotate(45deg);
+    font-size: 24px;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    background-color: rgb(66, 45, 36);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+}
+
+.wallet-token-item-activity-body-details-status-confirmed {
+    color: green;
+    text-align: start;
+}
+
+.wallet-token-item-activity-body-details-status-pending {
+    color: yellowgreen;
+    text-align: start;
+}
+
+.wallet-token-item-activity-body-details-status-failed {
+    color: crimson;
+    text-align: start;
+}
