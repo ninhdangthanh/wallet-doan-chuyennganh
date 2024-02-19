@@ -204,3 +204,145 @@
     top: 50%;
     transform: translateY(-50%);
 }
+
+.activity-popup-detail-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: #191c23;
+    z-index: 10;
+    width: 360px;
+    padding: 16px 16px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.activity-popup-detail-title {
+    color: white;
+}
+
+.activity-popup-detail-title-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+.activity-popup-detail-body {
+    padding-top: 20px;
+    color: white;
+}
+
+.activity-popup-detail-content {
+    font-size: 14px;
+    color: dodgerblue;
+}
+
+.activity-popup-detail-row {
+    padding-bottom: 8px;
+}
+
+.activity-popup-detail-row strong {
+    font-size: 14px;
+}
+
+.activity-popup-detail-row-from-to {
+    padding-top: 16px;
+}
+
+.activity-popup-detail-row-title {
+    margin-top: 10px;
+    margin-bottom: 16px;
+}
+
+.activity-popup-detail-arrow {
+    border: 2px solid orangered;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+}
+
+.activity-popup-detail-tx {
+    font-size: 14px;
+    color: #8a8a8a;
+}
+
+.show-private-key-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: #191c23;
+    z-index: 10;
+    width: 360px;
+    padding: 16px 16px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.show-private-key-title {
+    color: white;
+}
+
+.show-private-key-body {
+    text-align: center;
+    margin-top: 16px;
+}
+
+.show-private-key-detail-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.show-private-key-account-name {
+    position: relative;
+    color: white;
+}
+
+.show-private-key-account-name-title {
+    margin-top: 12px;
+    font-size: 20px;
+}
+
+.show-private-key-name-edit-button {
+    right: 0;
+    top: 10px;
+}
+
+.show-private-key-enter-password {
+    text-align: start;
+    margin-top: 38px;
+}
+
+.show-private-key-enter-password-title {
+    color: white;
+    margin-bottom: 8px;
+}
+
+.show-private-key-button {
+    padding-top: 24px;
+}
+
+.show-private-key-button-cancel {
+    font-size: 18px;
+    padding: 8px 50px;
+    background-color: #191c23;
+    border-radius: 50px;
+    border: 1px solid orangered;
+    color: orangered;
+}
+
+.show-private-key-button-confirm {
+    font-size: 18px;
+    padding: 8px 50px;
+    background-color: orangered;
+    border-radius: 50px;
+    border: none;
+    color: black;
+}

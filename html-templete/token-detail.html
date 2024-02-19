@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="./logo-orange-blockchainblockchain">
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="token-detail.css">
 </head>
 <body>
     <div class="app-container">
@@ -29,8 +31,50 @@
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </div>
             </div>
-            <div class="wallet-container-coin">
-                
+            <div class="token-detail-container">
+                <div class="token-detail-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+                <div class="token-detail-container-title">
+                    <div class="token-detail-title">
+                        Token details
+                    </div>
+                    <h2 class="token-detail-quantity top-8px">
+                        950000
+                    </h2>
+                    <div class="top-20px token-detail-token-contract-address-title">
+                        <strong>Token name</strong>
+                    </div>
+                    <div class="token-detail-token-contract-address top-8px">
+                        MyTokenERC20
+                    </div>
+                    <div class="top-20px token-detail-token-contract-address-title">
+                        <strong>Token contract address</strong>
+                    </div>
+                    <div class="token-detail-token-contract-address top-8px">
+                        0x29ed8cE3cA1CcF72838AdC691726603b42d8b799
+                    </div>
+                    <div class="top-20px token-detail-token-network-title">
+                        <strong>Network:</strong>
+                    </div>
+                    <div class="token-detail-token-network top-8px">
+                        Sepolia test network
+                    </div>
+                </div>
+
+                <!-- button -->
+                <div class="top-20px wallet-coin-option-item token-detail-token-send flex-row">
+                    <div class="wallet-coin-option-button flex-row">
+                        <i class="fa-solid fa-arrow-up wallet-coin-option-button-send"></i>
+                    </div>
+                <span>Send</span>
+                </div>
+                <div class="top-20px top-20px network-select-add">
+                    View Asset in explorer 
+                </div>
+                <div class="top-20px network-select-add">
+                    Hide token
+                </div>
             </div>
         </div>
         </div>
