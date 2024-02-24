@@ -1,0 +1,245 @@
+.wallet-account-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.send-container {
+    position: relative;
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 12px;
+    background-color: #191c23;
+    padding: 0 16px;
+    padding-top: 12px;
+    border-radius: 10px;
+    padding-bottom: 20px;
+}
+
+.send-container-account-item {
+    display: flex;
+}
+
+.send-container-account-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 50px;
+}
+
+.send-container-cancel {
+    color: orangered;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+}
+
+.send-container-title {
+    padding-bottom: 16px;
+}
+
+.send-container-input {
+    background-color: #191c23;
+    color: #888888;
+}
+
+.send-container-input::placeholder {
+    color: #888888;
+}
+
+.send-container-account-title {
+    font-size: 18px;
+    text-align: start;
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+
+.send-container-account-list {
+    text-align: start;
+}
+
+.send-container-account-item {
+    padding: 12px;
+}
+
+.send-container-account-item:hover {
+    background-color: rgb(56, 54, 54);
+}
+
+.send-container-account-item-info {
+    flex: 1;
+    padding-left: 20px;
+}
+
+.send-container-account-item-name {
+    padding-bottom: 4px;
+}
+
+.quantity-send-container {
+    width: 500px;
+    background-color: #191c23;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 12px;
+    position: relative;
+    padding: 0 12px;
+}
+
+.quantity-send-asset {
+    margin-top: 30px;
+    padding: 0 12px;
+}
+
+.quantity-send-asset-choose-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 60px;
+}
+
+.quantity-send-title {
+    font-size: 24px;
+    padding-top: 12px;
+}
+
+.quantity-send-close {
+    color: orangered;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.quantity-send-account {
+    border: 1px solid orangered;
+    border-radius: 8px;
+    text-align: start;
+    padding: 10px 16px;
+    margin-top: 10px;
+}
+
+.quantity-send-account-address {
+    font-size: 14px;
+}
+
+.quantity-send-account-name {
+    color: orangered;
+}
+
+.quantity-send-button {
+    padding: 0 20px;
+    padding-bottom: 30px;
+    margin-top: 80px;
+}
+
+.quantity-send-button div {
+    width: 200px;
+    height: 46px;
+    border-radius: 80px;
+    background-color: red;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 550;
+}
+
+.quantity-send-button-cancel {
+    background-color: #191c23 !important;
+    color: orangered;
+    border: 2px solid orangered;
+}
+
+.quantity-send-asset-choose-quantity {
+    text-align: start;
+    padding-left: 16px;
+}
+
+.quantity-send-amount-title {
+    color: #d8d8d8;
+}
+
+.quantity-send-amount-title-max {
+    color: orangered;
+    /* padding: 2px 4px; */
+    border-radius: 8px;
+    font-size: 12px;
+    margin-top: 6px;
+    border: 1px solid orangered;
+}
+
+.quantity-send-asset-choose-quantity-balance {
+    font-size: 14px;
+}
+
+.quantity-send-asset-choose {
+    border: 1px solid #747474;
+    border-radius: 6px;
+    padding: 10px 16px;
+}
+
+.quantity-send-asset-choose i {
+    margin-left: 16px;
+}
+
+.quantity-send-amount {
+    margin-top: 16px;
+    padding: 0 12px;
+}
+
+.quantity-send-amount-input-top-input {
+    min-width: 28px;
+    max-width: 88px;
+    width: auto;
+    background-color: #191c23;
+    border: none;
+    font-size: 18px;
+    color: orangered;
+}
+
+.quantity-send-amount-input-top-input::-webkit-inner-spin-button,
+.quantity-send-amount-input-top-input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+.quantity-send-amount-input-top {
+    display: flex;
+}
+
+.quantity-send-amount-input-title {
+    display: flex;
+    align-items: center;
+    margin-left: 6px;
+}
+
+.quantity-send-amount-input {
+    border: 1px solid #747474;
+    border-radius: 6px;
+    padding: 6px 20px;
+}
+
+.quantity-send-amount-input-bot {
+    font-size: 14px;
+}
+
+.quantity-send-gas-estimate {
+    text-align: start;
+}
+
+.quantity-send-gas-push {
+    text-align: end;
+}
+
+.quantity-send-gas-container {
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 1px solid #747474;
+    margin: 20px 12px;
+}
+
+.quantity-send-gas-push-right {
+    font-size: 14px;
+    color: aliceblue;
+}
+
+.quantity-send-gas-push-left {
+    color: green;
+}
