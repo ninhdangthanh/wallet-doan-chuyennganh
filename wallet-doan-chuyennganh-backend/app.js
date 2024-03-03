@@ -4,7 +4,7 @@ import helmet from "helmet";
 import cors from "cors";
 
 // Import routes
-import usersRoutes from "./routes/users.routes.js"
+import authRoutes from "./routes/auth.routes.js"
 
 const app = express();
 
@@ -24,6 +24,6 @@ app.use("/hello", async (req, res) => {
     } catch (error) {}
 });
 
-app.use("/api/users", usersRoutes);
+app.use("/api/auth", authRoutes);
 
 export default app;
