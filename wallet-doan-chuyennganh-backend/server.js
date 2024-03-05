@@ -1,5 +1,6 @@
 import app from "./app.js";
 import { sequelize } from "./db/database.js";
+import { Account } from "./models/Account.js";
 
 import {User} from './models/User.js'
 
@@ -8,6 +9,7 @@ async function db_connect() {
     try {
         await sequelize.authenticate()
         // await User.sync({ force: true }) 
+        // await Account.sync({ force: true })
     } catch (error) {
         console.error('Unable to connect to the database:', err);
     }
