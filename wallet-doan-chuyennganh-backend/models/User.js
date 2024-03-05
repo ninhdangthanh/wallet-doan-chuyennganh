@@ -35,7 +35,7 @@ User.hasMany(Account, {
     foreignKey: "user_id",
     sourceKey: "id",
 });
-  
+
 Account.belongsTo(User, {
     foreignKey: "user_id",
     targetId: "id",

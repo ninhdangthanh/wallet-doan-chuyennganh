@@ -27,7 +27,7 @@ app.use("/hello", async (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/api/account", accountRoutes);
+app.use("/api/account", authenticateToken, accountRoutes);
 app.get('/secure-route', authenticateToken, (req, res) => {
     console.log(req.user);
     res.json({ message: 'This is a secure route', user: req.user });
