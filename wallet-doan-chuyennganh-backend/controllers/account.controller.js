@@ -1,7 +1,6 @@
 import { ethers } from 'ethers'
 
 import { Account } from '../models/Account.js'
-import { User } from '../models/User.js'
 
 export const createAccount = async (req, res) => {
     try {
@@ -43,11 +42,10 @@ export const removeAccount = async (req, res) => {
         }
         
         await account.destroy();
-        console.log();
 
         return res.status(200).json({message: 'Success: Account removed successfully'})
     } catch (error) {
-        return res.status(400).json({ error: "BadRequest: Can not create new account, err=" + error});
+        return res.status(400).json({ error: "BadRequest: Can not removed account, err=" + error});
     }
 }
 

@@ -6,6 +6,7 @@ import cors from "cors";
 // Import routes
 import authRoutes from "./routes/auth.routes.js"
 import accountRoutes from "./routes/account.routes.js"
+import networkRoutes from "./routes/network.routes.js"
 import { authenticateToken } from "./utils/jwt.js";
 
 const app = express();
@@ -28,6 +29,7 @@ app.use("/hello", async (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/account", authenticateToken, accountRoutes);
+app.use("/api/network", authenticateToken, networkRoutes);
 app.get('/secure-route', authenticateToken, (req, res) => {
     console.log(req.user);
     res.json({ message: 'This is a secure route', user: req.user });
