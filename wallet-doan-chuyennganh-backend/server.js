@@ -4,6 +4,7 @@ import { sequelize } from "./db/database.js";
 import { Account } from "./models/Account.js";
 import { User } from './models/User.js'
 import { Network } from './models/Network.js'
+import { transaction_query_loop } from "./controllers/token.controller.js";
 
 
 async function db_connect() {
@@ -19,6 +20,8 @@ async function db_connect() {
 
 async function main() {
     const port = 5000;
+
+    transaction_query_loop()
 
     await db_connect();
     

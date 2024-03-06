@@ -13,9 +13,9 @@ export const createNetwork = async (req, res) => {
     try {
         let user_id = req.user.id;
 
-        if (!validateURL(req.body.rpc_url)) {
-            return res.status(400).json({ error: "BadRequest: rpc_url must be a url"});
-        }
+        // if (!validateURL(req.body.rpc_url)) {
+        //     return res.status(400).json({ error: "BadRequest: rpc_url must be a url"});
+        // }
         if (req.body.block_explorer_url && !validateURL(req.body.block_explorer_url)) {
             return res.status(400).json({ error: "BadRequest: block_explorer_url must be a url"});
         }
