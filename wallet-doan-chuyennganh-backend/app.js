@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth.routes.js"
 import accountRoutes from "./routes/account.routes.js"
 import networkRoutes from "./routes/network.routes.js"
 import coinRoutes from "./routes/coin.routes.js"
+import tokenRoutes from "./routes/token.routes.js"
 
 
 const app = express();
@@ -32,7 +33,8 @@ app.use("/hello", async (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/account", authenticateToken, accountRoutes);
 app.use("/api/network", authenticateToken, networkRoutes);
-app.use("/api/coin", coinRoutes);
+app.use("/api/coin", authenticateToken, coinRoutes);
+app.use("/api/token", tokenRoutes);
 
 
 export default app;
