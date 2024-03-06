@@ -8,7 +8,7 @@ import { authenticateToken } from "./utils/jwt.js";
 import authRoutes from "./routes/auth.routes.js"
 import accountRoutes from "./routes/account.routes.js"
 import networkRoutes from "./routes/network.routes.js"
-import tokenRoutes from "./routes/token.routes.js"
+import coinRoutes from "./routes/coin.routes.js"
 
 
 const app = express();
@@ -32,11 +32,7 @@ app.use("/hello", async (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/account", authenticateToken, accountRoutes);
 app.use("/api/network", authenticateToken, networkRoutes);
-app.use("/api/token", tokenRoutes);
-app.get('/secure-route', authenticateToken, (req, res) => {
-    console.log(req.user);
-    res.json({ message: 'This is a secure route', user: req.user });
-});
+app.use("/api/coin", coinRoutes);
 
 
 export default app;

@@ -71,10 +71,14 @@ export const sendCoin = async (req, res) => {
             return res.status(200).json({ message: "Pending: Transaction is requested to blockchain"});
         } catch (error) {
             let history_failed = {
-                network_id: network_id,
+                from: account.address,
                 to: to_addr,
                 amount: `${amount}`,
-                status: 'PENDING',
+                network_id: network_id,
+                chain_id: network.chain_id,
+                chain_name: network.name,
+                chain_rpc: network.rpc_url,
+                status: 'FAILED',
                 account_id: account_id,
                 user_id: user_id,
             }

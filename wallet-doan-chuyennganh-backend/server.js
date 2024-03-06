@@ -5,7 +5,7 @@ import { Account } from "./models/Account.js";
 import { User } from './models/User.js'
 import { Network } from './models/Network.js'
 import { Activity } from './models/Activity.js'
-import { transaction_query_loop } from "./controllers/token.controller.js";
+import { transaction_query_loop } from "./controllers/coin.controller.js";
 
 
 async function db_connect() {

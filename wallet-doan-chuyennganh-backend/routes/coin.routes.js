@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { sendCoin } from "../controllers/token.controller.js";
+import { sendCoin } from "../controllers/coin.controller.js";
 
 const router = Router();
 
