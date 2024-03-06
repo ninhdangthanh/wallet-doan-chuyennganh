@@ -4,6 +4,7 @@ import { sequelize } from "./db/database.js";
 import { Account } from "./models/Account.js";
 import { User } from './models/User.js'
 import { Network } from './models/Network.js'
+import { Activity } from './models/Activity.js'
 import { transaction_query_loop } from "./controllers/token.controller.js";
 
 
@@ -13,8 +14,9 @@ async function db_connect() {
         // await User.sync({ force: true }) 
         // await Account.sync({ force: true })
         // await Network.sync({ force: true })
+        // await Activity.sync({ force: true })
     } catch (error) {
-        console.error('Unable to connect to the database:', err);
+        console.error('Unable to connect to the database:', error);
     }
 }
 
