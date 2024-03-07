@@ -1,6 +1,7 @@
 import { Network } from "../models/Network.js"
 import { Account } from "../models/Account.js"
 import { erc20_abi } from "../abis/erc20.js"
+import { erc721_abi } from "../abis/erc721.js"
 import { ERC20 } from "../models/ERC20.js"
 import { ethers } from "ethers"
 
@@ -93,5 +94,45 @@ export const getTokenERC20s = async (req, res) => {
         return res.status(200).json(token_erc20s);
     } catch (error) {
         return res.status(400).json({ error: "BadRequest: failed to remove token erc20, err=" + error});
+    }
+}
+
+
+export const importTokenERC721 = async (req, res) => {
+    try {
+        const user_id = 4// req.user.id
+        const account_id = 25;
+        const token_id = 1;
+        const address_token = "0x84f94f9EA02b59f60b498A47bb67753372db7e3f"
+        const network_id = 10
+
+        let network = await Network.findOne({
+            where: {
+                id: network_id,
+                // user_id: user_id
+            }
+        });
+        let account = await Account.findOne({
+            where: {
+                id: account_id,
+                user_id: user_id
+            }
+        });
+
+        const provider = new ethers.providers.JsonRpcProvider(network.rpc_url);
+        const tokenContract = new ethers.Contract(address_token, erc721_abi, provider);
+
+        const name = await tokenContract.name();
+        const symbol = await tokenContract.symbol();
+        const tokenOwner = await tokenContract.ownerOf(token_id)
+        const isOwner = tokenOwner === account.address
+        
+        if (!isOwner) {
+            return res.status(400).json({ error: "BadRequest: NFT is not belong this account"});
+        }
+
+        return res.status(200).json({name, symbol, tokenOwner, address: account.address, isOwner});
+    } catch (error) {
+        return res.status(400).json({ error: "BadRequest: failed to import NFT, err=" + error});
     }
 }
