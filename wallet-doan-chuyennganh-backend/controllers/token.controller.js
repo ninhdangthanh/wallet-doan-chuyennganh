@@ -146,3 +146,62 @@ export const importTokenERC721 = async (req, res) => {
         return res.status(400).json({ error: "BadRequest: failed to import NFT, err=" + error});
     }
 }
+
+export const removeNFT = async (req, res) => {
+    try {
+        const user_id = 4  // req.user.id
+        const { account_id, nft_id } = req.params;
+
+        let account = await Account.findOne({
+            where: {
+                id: account_id,
+                user_id: user_id
+            }
+        });
+
+        if(!account) {
+            return res.status(400).json({ error: "BadRequest: Account not belong user"});
+        }
+
+        let nft = await ERC721.findOne({
+            where: {
+                id: nft_id,
+                account_id: account_id
+            }
+        });
+
+        await nft.destroy()
+
+        return res.status(200).json({ message: "Remove NFT success"});
+    } catch (error) {
+        return res.status(400).json({ error: "BadRequest: Failed to delete NFT, error=" + error});
+    }
+}
+
+export const getNFTofAccount = async (req, res) => {
+    try {
+        const user_id = 4  // req.user.id
+        const { account_id } = req.params;
+
+        let account = await Account.findOne({
+            where: {
+                id: account_id,
+                user_id: user_id
+            }
+        });
+
+        if(!account) {
+            return res.status(400).json({ error: "BadRequest: Account not belong user"});
+        }
+
+        let NFTs = await ERC721.findAll({
+            where: {
+                account_id: account_id
+            }
+        });
+
+        return res.status(200).json(NFTs);
+    } catch (error) {
+        return res.status(400).json({ error: "BadRequest: Failed to get NFT of account, error=" + error});
+    }
+}

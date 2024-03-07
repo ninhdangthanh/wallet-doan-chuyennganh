@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
-import routes from "./routes/index.js"
+import routes from "./routes/index.routes.js"
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swaggerConfig.js';
 

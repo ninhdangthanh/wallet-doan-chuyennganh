@@ -14,15 +14,18 @@ export const ERC721 = sequelize.define(
         },
         contract_address: {
             type: DataTypes.STRING,
+            unique: 'nft_constraint',
         },
         token_id: {
             type: DataTypes.INTEGER,
+            unique: 'nft_constraint',
         },
         symbol: {
             type: DataTypes.STRING,
         },
         account_id: {
             type: DataTypes.INTEGER,
+            unique: 'nft_constraint',
         },
         network_id: {
             type: DataTypes.INTEGER,

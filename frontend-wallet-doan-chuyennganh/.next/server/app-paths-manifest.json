@@ -1,8 +1,6 @@
 {
-  "/login/page": "app/login/page.js",
-  "/nft/[id]/page": "app/nft/[id]/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/send-token/page": "app/send-token/page.js",
+  "/signin/page": "app/signin/page.js",
+  "/dashboard/[token-id]/page": "app/dashboard/[token-id]/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/nft/page": "app/nft/page.js"
+  "/dashboard/page": "app/dashboard/page.js"
 }
