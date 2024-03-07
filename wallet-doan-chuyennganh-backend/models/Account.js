@@ -25,6 +25,6 @@ export const Account = sequelize.define(
         },
     },
     {
-        timestamps: false,
+        timestamps: true,
     }
 );

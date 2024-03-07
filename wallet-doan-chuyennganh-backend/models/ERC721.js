@@ -32,6 +32,6 @@ export const ERC721 = sequelize.define(
         }
     },
     {
-        timestamps: false,
+        timestamps: true,
     }
 );

@@ -32,6 +32,6 @@ export const ERC20 = sequelize.define(
         }
     },
     {
-        timestamps: false,
+        timestamps: true,
     }
 );
