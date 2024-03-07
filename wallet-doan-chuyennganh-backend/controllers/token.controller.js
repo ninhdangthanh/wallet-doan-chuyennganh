@@ -4,6 +4,7 @@ import { erc20_abi } from "../abis/erc20.js"
 import { erc721_abi } from "../abis/erc721.js"
 import { ERC20 } from "../models/ERC20.js"
 import { ethers } from "ethers"
+import { ERC721 } from "../models/ERC721.js"
 
 export const importTokenERC20 = async (req, res) => {
     const user_id = 4 //req.user.id
@@ -101,10 +102,7 @@ export const getTokenERC20s = async (req, res) => {
 export const importTokenERC721 = async (req, res) => {
     try {
         const user_id = 4// req.user.id
-        const account_id = 25;
-        const token_id = 1;
-        const address_token = "0x84f94f9EA02b59f60b498A47bb67753372db7e3f"
-        const network_id = 10
+        const { account_id, token_id, address_token, network_id } = req.body;
 
         let network = await Network.findOne({
             where: {
@@ -122,8 +120,6 @@ export const importTokenERC721 = async (req, res) => {
         const provider = new ethers.providers.JsonRpcProvider(network.rpc_url);
         const tokenContract = new ethers.Contract(address_token, erc721_abi, provider);
 
-        const name = await tokenContract.name();
-        const symbol = await tokenContract.symbol();
         const tokenOwner = await tokenContract.ownerOf(token_id)
         const isOwner = tokenOwner === account.address
         
@@ -131,7 +127,21 @@ export const importTokenERC721 = async (req, res) => {
             return res.status(400).json({ error: "BadRequest: NFT is not belong this account"});
         }
 
-        return res.status(200).json({name, symbol, tokenOwner, address: account.address, isOwner});
+        const name = await tokenContract.name();
+        const symbol = await tokenContract.symbol();
+
+        const new_token_erc721 = {
+            name: name,
+            contract_address: address_token,
+            token_id: token_id,
+            symbol: symbol,
+            account_id: account_id,
+            network_id: network_id
+        }
+
+        let created_token = await ERC721.create(new_token_erc721);
+        
+        return res.status(200).json({ message: "Import NFT succes", data:  created_token});
     } catch (error) {
         return res.status(400).json({ error: "BadRequest: failed to import NFT, err=" + error});
     }

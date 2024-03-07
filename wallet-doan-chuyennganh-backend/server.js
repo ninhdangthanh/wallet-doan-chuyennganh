@@ -7,6 +7,7 @@ import { Network } from './models/Network.js'
 import { Activity } from './models/Activity.js'
 import { ERC20 } from './models/ERC20.js'
 import { transaction_query_loop } from "./controllers/coin.controller.js";
+import { ERC721 } from "./models/ERC721.js";
 
 
 async function db_connect() {
@@ -17,6 +18,7 @@ async function db_connect() {
         // await Network.sync({ force: true })
         // await Activity.sync({ force: true })
         // await ERC20.sync({ force: true })
+        // await ERC721.sync({ force: true })
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
