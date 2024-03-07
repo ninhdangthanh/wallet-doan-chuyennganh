@@ -1,6 +1,0 @@
-{
-  "/signin/page": "app/signin/page.js",
-  "/dashboard/[token-id]/page": "app/dashboard/[token-id]/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/dashboard/page": "app/dashboard/page.js"
-}
