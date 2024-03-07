@@ -1,69 +1,37 @@
 "use client";
 
-import { Heading, Button, Input, useToast } from "@chakra-ui/react";
-import styles from "../../styles/signin.module.scss";
-import Head from "next/head";
-import { FormEvent, useState } from "react";
-import { authApi } from "../api-client/auth-api";
-import { ISignInPayload } from "../common";
-import { useRouter } from "next/navigation";
-import "./signin.css"
+import "../css/bootstrap.min.css"
+import "../css/login.css"
 
 export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-
-  async function handleSignIn(e: FormEvent<HTMLFormElement>): Promise<void> {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const payload: ISignInPayload = {
-        email: email,
-      };
-      const response = await authApi.signIn(payload);
-      console.log(response.data.access_token);
-
-      // Set to session storage
-      sessionStorage.setItem("access_token", response.data.access_token);
-
-      router.push("/dashboard");
-    } catch (error) {
-      console.error("Sign-in failed, error", error);
-    } finally {
-      setLoading(false); // Reset loading state
-    }
-  }
 
   return (
-    <>
-      <Head>
-        <title>Sign In</title>
-      </Head>
-      <main className={styles.pageContainer}>
-        <Heading as={"h1"}>Sign in to your account</Heading>
-        <form className={styles.form} onSubmit={handleSignIn}>
-          <label>
-            <p>Email address</p>
-            <Input
-              placeholder="example@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </label>
-          <button className="buttonlogin">Okkk</button>
-          <Button
-            isLoading={loading}
-            bgColor="blue.500"
-            color="white"
-            _hover={{ backgroundColor: "blue.600" }}
-            type="submit"
-            as="button"
-          >
-            Sign in
-          </Button>
-        </form>
-      </main>
-    </>
+    <div className="app-container">
+        <h1 className="wallet-logo">
+            U2MYA BLOCKCHAIN WALLET
+        </h1>
+
+        <div className="login-container">
+            <h3 className="login-container-title">Welcome to U2MYA blockchain wallet, a wallet for ethereum ecosystem</h3>
+            <div className="login-container-form">
+                <h4>Sign In</h4>
+                <form>
+                    <div className="form-group">
+                      <input type="email" className="form-control login-container-input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" />
+                    </div>
+                    <div className="form-group">
+                      <input type="password" className="form-control login-container-input" id="exampleInputPassword1" placeholder="Password" />
+                    </div>
+                    <div className="form-group">
+                        <input type="password" className="form-control login-container-input" id="exampleInputPassword1" placeholder="Confirm Password" />
+                      </div>
+                    <button type="submit" className="btn btn-primary login-container-button-login">Create</button>
+                    <span className="create-account-success">Create success, please navigate to login page to continue!!!</span>
+                </form>
+                <a href="" className="login-container-create-new-account">Already had an account?</a>
+            </div>
+        </div>
+
+    </div>
   );
 }
