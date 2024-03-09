@@ -71,6 +71,29 @@ export const removeNetwork = async (req, res) => {
     }
 }
 
+export const getNetworkOfUser = async (req, res) => {
+    try {
+        let user_id = req.user.id;
+
+        console.log("user_id", user_id);
+        
+        const networks = await Network.findAll({
+            $or: [
+                {user_id: {
+                    $eq: user_id
+                }},
+                {is_default: {
+                    $eq: true
+                }}
+            ]
+        });
+
+        return res.status(200).json(networks)
+    } catch (error) {
+        return res.status(400).json({ error: "BadRequest: failed to get network, err=" + error});
+    }
+}
+
 function validateURL(url) {
     var pattern = /^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+\.[a-zA-Z0-9]+(?:\/[^\s]*)?$/;
     return pattern.test(url);

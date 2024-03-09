@@ -4,7 +4,7 @@ import { forgotPassword, login, signin, changePassword } from "../controllers/au
 const router = Router();
 
 router.post("/login", login);
-router.post("/signin", signin);
+router.post("/signup", signin);
 router.post("/forgot-password", forgotPassword)
 router.post("/change-password", changePassword)
 

@@ -20,7 +20,7 @@ export const getAccountOfUser = async (req, res) => {
 
         return res.status(200).json(accounts)
     } catch (error) {
-        return res.status(400).json({ error: "BadRequest: Can not create new account, err=" + error});
+        return res.status(400).json({ error: "BadRequest: Can not get account of user, err=" + error});
     }
 }
 
@@ -31,6 +31,8 @@ export const createAccount = async (req, res) => {
         const wallet = ethers.Wallet.createRandom();
         const address = wallet.address;
         const privateKey = wallet.privateKey;
+
+        // todo: 1 user have maximum 6 account
 
         let new_account = {
             name: "Account " + address.slice(2, 8),
