@@ -13,26 +13,14 @@ export const createNetwork = async (req, res) => {
     try {
         let user_id = req.user.id;
 
-        // if (!validateURL(req.body.rpc_url)) {
-        //     return res.status(400).json({ error: "BadRequest: rpc_url must be a url"});
-        // }
-        // if (req.body.block_explorer_url && !validateURL(req.body.block_explorer_url)) {
-        //     return res.status(400).json({ error: "BadRequest: block_explorer_url must be a url"});
-        // }
-        if (req.body.name.length <= 3) {
-            return res.status(400).json({ error: "BadRequest: network name must greater than 3 character"});
-        }
-        if (req.body.chain_id <= 1) {
-            return res.status(400).json({ error: "BadRequest: network chain_id must greater than 1"});
-        }
-        if (req.body.currency_symbol && req.body.currency_symbol.length <= 3) {
-            return res.status(400).json({ error: "BadRequest: network name must greater than 3 character"});
-        }
+        const provider = new ethers.providers.JsonRpcProvider(req.body.rpc_url);
+
+        const network = await provider.getNetwork();
         
         const new_network = {
-            name: req.body.name,
+            name: network.name,
             rpc_url: req.body.rpc_url,
-            chain_id: req.body.chain_id,
+            chain_id: network.chainId,
             currency_symbol: req.body.currency_symbol,
             block_explorer_url: req.body.block_explorer_url,
             is_default: false,
