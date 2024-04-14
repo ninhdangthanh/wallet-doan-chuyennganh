@@ -8,7 +8,7 @@ import { ERC721 } from "../models/ERC721.js"
 
 export const importTokenERC20 = async (req, res) => {
     const user_id = req.user.id
-    const {network_id, account_id, token_address} = req.body
+    const {account_id, token_address} = req.body
 
     // if(network_id <= 0) {
     //     return res.status(400).json({ error: "BadRequest: Network id must greater than 0"});
@@ -83,11 +83,10 @@ export const removeTokenERC20 = async (req, res) => {
 
 export const getTokenERC20s = async (req, res) => {
     try {
-        const {network_id, account_id} = req.params;
+        const {account_id} = req.params;
 
         let token_erc20s = await ERC20.findAll({
             where: {
-                network_id: network_id,
                 account_id: account_id
             }
         });
