@@ -12,11 +12,11 @@ export const getAccountOfUser = async (req, res) => {
             }
         });
 
-        if (accounts) {
-            accounts.forEach(item => {
-                item.privateKey = ""
-            });
-        }
+        // if (accounts) {
+        //     accounts.forEach(item => {
+        //         item.privateKey = ""
+        //     });
+        // }
 
         return res.status(200).json(accounts)
     } catch (error) {

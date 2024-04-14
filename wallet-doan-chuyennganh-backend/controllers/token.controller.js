@@ -7,12 +7,12 @@ import { ethers } from "ethers"
 import { ERC721 } from "../models/ERC721.js"
 
 export const importTokenERC20 = async (req, res) => {
-    const user_id = 4 //req.user.id
+    const user_id = req.user.id
     const {network_id, account_id, token_address} = req.body
 
-    if(network_id <= 0) {
-        return res.status(400).json({ error: "BadRequest: Network id must greater than 0"});
-    }
+    // if(network_id <= 0) {
+    //     return res.status(400).json({ error: "BadRequest: Network id must greater than 0"});
+    // }
     if(account_id <= 0) {
         return res.status(400).json({ error: "BadRequest: Account_id id must greater than 0"});
     }
@@ -21,12 +21,12 @@ export const importTokenERC20 = async (req, res) => {
     }
 
     try {
-        let network = await Network.findOne({
-            where: {
-                id: network_id,
-                // user_id: user_id
-            }
-        });
+        // let network = await Network.findOne({
+        //     where: {
+        //         id: network_id,
+        //         // user_id: user_id
+        //     }
+        // });
         let account = await Account.findOne({
             where: {
                 id: account_id,
@@ -34,7 +34,7 @@ export const importTokenERC20 = async (req, res) => {
             }
         });
 
-        const provider = new ethers.providers.JsonRpcProvider(network.rpc_url);
+        const provider = new ethers.providers.JsonRpcProvider("https://ethereum-sepolia-rpc.publicnode.com");
         const tokenContract = new ethers.Contract(token_address, erc20_abi, provider);
 
         const name = await tokenContract.name();
@@ -48,7 +48,7 @@ export const importTokenERC20 = async (req, res) => {
             symbol: symbol,
             decimal: decimals,
             account_id: account.id,
-            network_id: network_id
+            network_id: 1
         }
 
         // console.log(new_erc20_token);
