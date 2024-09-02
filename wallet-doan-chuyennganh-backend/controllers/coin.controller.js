@@ -1,6 +1,5 @@
 import { Account } from "../models/Account.js";
 import { Activity } from "../models/Activity.js";
-import { Network } from "../models/Network.js";
 import { ethers } from "ethers"
 
 

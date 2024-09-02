@@ -1,18 +1,12 @@
-import { Network } from "../models/Network.js"
 import { Account } from "../models/Account.js"
 import { erc20_abi } from "../abis/erc20.js"
-import { erc721_abi } from "../abis/erc721.js"
 import { ERC20 } from "../models/ERC20.js"
 import { ethers } from "ethers"
-import { ERC721 } from "../models/ERC721.js"
 
 export const importTokenERC20 = async (req, res) => {
     const user_id = req.user.id
     const {account_id, token_address} = req.body
 
-    // if(network_id <= 0) {
-    //     return res.status(400).json({ error: "BadRequest: Network id must greater than 0"});
-    // }
     if(account_id <= 0) {
         return res.status(400).json({ error: "BadRequest: Account_id id must greater than 0"});
     }
@@ -21,12 +15,6 @@ export const importTokenERC20 = async (req, res) => {
     }
 
     try {
-        // let network = await Network.findOne({
-        //     where: {
-        //         id: network_id,
-        //         // user_id: user_id
-        //     }
-        // });
         let account = await Account.findOne({
             where: {
                 id: account_id,
@@ -94,113 +82,5 @@ export const getTokenERC20s = async (req, res) => {
         return res.status(200).json(token_erc20s);
     } catch (error) {
         return res.status(400).json({ error: "BadRequest: failed to remove token erc20, err=" + error});
-    }
-}
-
-
-export const importTokenERC721 = async (req, res) => {
-    try {
-        const user_id = 4// req.user.id
-        const { account_id, token_id, address_token, network_id } = req.body;
-
-        let network = await Network.findOne({
-            where: {
-                id: network_id,
-                // user_id: user_id
-            }
-        });
-        let account = await Account.findOne({
-            where: {
-                id: account_id,
-                user_id: user_id
-            }
-        });
-
-        const provider = new ethers.providers.JsonRpcProvider(network.rpc_url);
-        const tokenContract = new ethers.Contract(address_token, erc721_abi, provider);
-
-        const tokenOwner = await tokenContract.ownerOf(token_id)
-        const isOwner = tokenOwner === account.address
-        
-        if (!isOwner) {
-            return res.status(400).json({ error: "BadRequest: NFT is not belong this account"});
-        }
-
-        const name = await tokenContract.name();
-        const symbol = await tokenContract.symbol();
-
-        const new_token_erc721 = {
-            name: name,
-            contract_address: address_token,
-            token_id: token_id,
-            symbol: symbol,
-            account_id: account_id,
-            network_id: network_id
-        }
-
-        let created_token = await ERC721.create(new_token_erc721);
-        
-        return res.status(200).json({ message: "Import NFT succes", data:  created_token});
-    } catch (error) {
-        return res.status(400).json({ error: "BadRequest: failed to import NFT, err=" + error});
-    }
-}
-
-export const removeNFT = async (req, res) => {
-    try {
-        const user_id = 4  // req.user.id
-        const { account_id, nft_id } = req.params;
-
-        let account = await Account.findOne({
-            where: {
-                id: account_id,
-                user_id: user_id
-            }
-        });
-
-        if(!account) {
-            return res.status(400).json({ error: "BadRequest: Account not belong user"});
-        }
-
-        let nft = await ERC721.findOne({
-            where: {
-                id: nft_id,
-                account_id: account_id
-            }
-        });
-
-        await nft.destroy()
-
-        return res.status(200).json({ message: "Remove NFT success"});
-    } catch (error) {
-        return res.status(400).json({ error: "BadRequest: Failed to delete NFT, error=" + error});
-    }
-}
-
-export const getNFTofAccount = async (req, res) => {
-    try {
-        const user_id = 4  // req.user.id
-        const { account_id } = req.params;
-
-        let account = await Account.findOne({
-            where: {
-                id: account_id,
-                user_id: user_id
-            }
-        });
-
-        if(!account) {
-            return res.status(400).json({ error: "BadRequest: Account not belong user"});
-        }
-
-        let NFTs = await ERC721.findAll({
-            where: {
-                account_id: account_id
-            }
-        });
-
-        return res.status(200).json(NFTs);
-    } catch (error) {
-        return res.status(400).json({ error: "BadRequest: Failed to get NFT of account, error=" + error});
     }
 }
