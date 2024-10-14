@@ -93,22 +93,22 @@ export const sendCoin = async (req, res) => {
 
 
 // if greater or equal 2 block confirm, transaction success
-export const transaction_query_loop = () => {
-    setInterval(async () => {
-        let transactions = await Activity.findAll({
-            where: {
-                status: 'PENDING'
-            }
-        });
-        if(transactions && transactions.length > 0) {
-            transactions.forEach(async (tx) => {
-                const provider = new ethers.providers.JsonRpcProvider(tx.chain_rpc);
-                const tx_detail = await provider.getTransaction(tx.tx_hash)
-                if (tx_detail.confirmations) {
-                    tx.status = 'SUCCESS'
-                    await tx.save()
-                }
-            });
-        }
-    }, 5000);
-}
+// export const transaction_query_loop = () => {
+//     setInterval(async () => {
+//         let transactions = await Activity.findAll({
+//             where: {
+//                 status: 'PENDING'
+//             }
+//         });
+//         if(transactions && transactions.length > 0) {
+//             transactions.forEach(async (tx) => {
+//                 const provider = new ethers.providers.JsonRpcProvider(tx.chain_rpc);
+//                 const tx_detail = await provider.getTransaction(tx.tx_hash)
+//                 if (tx_detail.confirmations) {
+//                     tx.status = 'SUCCESS'
+//                     await tx.save()
+//                 }
+//             });
+//         }
+//     }, 5000);
+// }

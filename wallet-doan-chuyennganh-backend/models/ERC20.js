@@ -26,10 +26,6 @@ export const ERC20 = sequelize.define(
             type: DataTypes.INTEGER,
             unique: 'erc20token',
         },
-        network_id: {
-            type: DataTypes.INTEGER,
-            unique: 'erc20token',
-        }
     },
     {
         timestamps: true,

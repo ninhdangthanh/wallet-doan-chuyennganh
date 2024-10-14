@@ -28,24 +28,9 @@ export const Activity = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        network_id: {
-            type: DataTypes.INTEGER,
-        },
-        chain_id: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-        },
-        chain_name: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        chain_rpc: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
         status: {
             type: DataTypes.STRING,
-            // values: ['FAILED', 'PENDING', 'SUCCESS'], 
+            values: ['FAILED', 'PENDING', 'SUCCESS'], 
         },
         account_id: {
             type: DataTypes.INTEGER

@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/database.js";
 import { Account } from "./Account.js";
+import { verify } from "crypto";
 
 export const User = sequelize.define(
     "users",
@@ -25,6 +26,11 @@ export const User = sequelize.define(
             type: DataTypes.BIGINT,
             allowNull: true,
         },
+        verifed: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            default: false
+        }
     },
     {
         timestamps: false,
