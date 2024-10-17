@@ -27,6 +27,7 @@ export const getAccountOfUser = async (req, res) => {
 export const createAccount = async (req, res) => {
     try {
         let user_id = req.user.id;
+        let account_name = req.body.name;
         
         const wallet = ethers.Wallet.createRandom();
         const address = wallet.address;
@@ -35,7 +36,7 @@ export const createAccount = async (req, res) => {
         // todo: 1 user have maximum 6 account
 
         let new_account = {
-            name: "Account " + address.slice(2, 8),
+            name: account_name,
             privateKey: privateKey,
             address: address,
             user_id: user_id
@@ -108,6 +109,7 @@ export const addAccount = async (req, res) => {
     try {
         let user_id = req.user.id;
         let account_private_key = req.body.account_private_key;
+        let new_name = req.body.name;
         
         if (!(account_private_key.length == 66 && account_private_key.slice(0, 2) == "0x")) {
             return res.status(400).json({ error: "BadRequest: Private key is incorrect format"});
@@ -118,7 +120,7 @@ export const addAccount = async (req, res) => {
         console.log(wallet.address);
 
         let account = {
-            name: "Account " + wallet.address.slice(2, 8),
+            name: new_name,
             privateKey: account_private_key,
             address: wallet.address,
             user_id: user_id
