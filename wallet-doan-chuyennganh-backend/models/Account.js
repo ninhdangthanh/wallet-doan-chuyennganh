@@ -19,6 +19,10 @@ export const Account = sequelize.define(
         address: {
             type: DataTypes.STRING,
         },
+        balance: {
+            type: DataTypes.FLOAT,
+            default: 0
+        },
         user_id: {
             type: DataTypes.INTEGER,
             unique: 'user_name', 
