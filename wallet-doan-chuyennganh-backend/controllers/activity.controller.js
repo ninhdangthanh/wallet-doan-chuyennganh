@@ -1,4 +1,4 @@
-import { Activity } from "../models/Activity.js"; // Update the path as needed
+import { Activity } from "../models/Activity.js";
 
 export const createActivity = async (req, res) => {
     try {
@@ -17,6 +17,27 @@ export const getAllActivities = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const getActivitiesOfAccount = async (req, res) => {
+    try {
+        let account_address = req.body.id;
+
+        const activities = await Activity.findAll({
+            where: {
+                [Op.or]: [
+                    { from: account_address },
+                    { to: account_address }
+                ]
+            }
+        });
+
+        res.status(200).json(activities);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 
 export const getActivityById = async (req, res) => {
     try {

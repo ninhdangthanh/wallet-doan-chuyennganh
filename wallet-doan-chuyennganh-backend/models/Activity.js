@@ -24,6 +24,14 @@ export const Activity = sequelize.define(
         amount: {
             type: DataTypes.STRING,
         },
+        erc20_name: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        erc20_symbol: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         nonce: {
             type: DataTypes.INTEGER,
             allowNull: true,
