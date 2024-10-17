@@ -71,7 +71,7 @@ async function main() {
 
     await db_connect();
 
-    setInterval(query_account_balance, system_config.txs_query_time);
+    // setInterval(query_account_balance, system_config.txs_query_time);
     
     try {
         await sequelize.sync({ force: false });

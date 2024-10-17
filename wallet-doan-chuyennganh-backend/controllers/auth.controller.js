@@ -27,6 +27,11 @@ export const login = async (req, res) => {
 
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         const isTempPasswordMatch = user.temporary_password == password && user.temporary_password_expired > Date.now();
+
+        if (!user.verifed) {
+            return res.status(400).json({ error: "BadRequest: Your account is not verified yet"});
+        }
+        
         if (isPasswordMatch || isTempPasswordMatch) {
             // login success
             let token = sign({id: user.id});
@@ -57,7 +62,7 @@ export const signin = async (req, res) => {
             return res.status(400).json({ error: "BadRequest: Password must be at least 6 characters long" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = {email: email, password: hashedPassword};
+        const newUser = {email: email, password: hashedPassword, verifed: false};
 
         const userModel = await User.create(newUser);
 
@@ -78,7 +83,7 @@ export const signin = async (req, res) => {
 
         let created_account = await Account.create(new_account);
         
-        // add account end
+        await sendEmail(email, "U2MYA blockchain wallet, create new account", `This is url to verify your account, please access it and back to app to experience http://localhost:5000/api/auth/verify/${userModel.id}`);
         
         return res.status(201).json({message: "User created"});
     } catch (error) {
@@ -90,6 +95,28 @@ export const signin = async (req, res) => {
         res.status(400).json({ error: "BadRequest: Cannot signin account" });
     }
 }
+
+export const verifyAccount = async (req, res) => {
+    try {
+        const { user_id } = req.params;
+
+        let user = await User.findByPk(user_id);
+        
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        user.verified = true;
+        await user.save();
+
+        console.log(user);
+        
+
+        return res.status(200).json({ message: "User verified" });
+    } catch (error) {
+        return res.status(400).json({ error: "BadRequest: Cannot verify account" });
+    }
+};
 
 export const forgotPassword = async (req, res) => {
     try {

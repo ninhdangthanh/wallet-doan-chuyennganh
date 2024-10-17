@@ -28,8 +28,6 @@ export const User = sequelize.define(
         },
         verifed: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
-            default: false
         }
     },
     {
