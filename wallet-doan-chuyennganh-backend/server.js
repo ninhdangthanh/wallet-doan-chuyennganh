@@ -5,15 +5,17 @@ import { Account } from "./models/Account.js";
 import { User } from './models/User.js'
 import { Activity } from './models/Activity.js'
 import { ERC20 } from './models/ERC20.js'
+import { TxsAnalytics } from "./models/TransactionAnalytics.js";
 
 
 async function db_connect() {
     try {
-        // await sequelize.authenticate()
-        // await User.sync({ force: true }) 
-        // await Account.sync({ force: true })
-        // await Activity.sync({ force: true })
-        // await ERC20.sync({ force: true })
+        await sequelize.authenticate()
+        await User.sync({ force: true }) 
+        await Account.sync({ force: true })
+        await Activity.sync({ force: true })
+        await ERC20.sync({ force: true })
+        await TxsAnalytics.sync({ force: true })
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
