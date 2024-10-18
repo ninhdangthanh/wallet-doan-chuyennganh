@@ -1,8 +1,0 @@
-version: '3'
-
-services:
-  web:
-    image: ninhdangthanh/eth-wallet-templete:latest
-    build: .
-    ports:
-      - "2323:80"
