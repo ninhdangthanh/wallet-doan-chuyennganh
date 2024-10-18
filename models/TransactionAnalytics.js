@@ -12,6 +12,9 @@ export const TxsAnalytics = sequelize.define(
         tx_hash: {
             type: DataTypes.STRING,
         },
+        balance: {
+            type: DataTypes.STRING,
+        },
         gas: {
             type: DataTypes.STRING,
         },
