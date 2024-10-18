@@ -28,7 +28,7 @@ export const login = async (req, res) => {
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         const isTempPasswordMatch = user.temporary_password == password && user.temporary_password_expired > Date.now();
 
-        if (!user.verifed) {
+        if (!user.verified) {
             return res.status(400).json({ error: "BadRequest: Your account is not verified yet"});
         }
         
@@ -85,7 +85,7 @@ export const signin = async (req, res) => {
         
         await sendEmail(email, "U2MYA blockchain wallet, create new account", `This is url to verify your account, please access it and back to app to experience http://localhost:5000/api/auth/verify/${userModel.id}`);
         
-        return res.status(201).json({message: "User created"});
+        return res.status(201).json({message: "Verify email to active user sent to your email!"});
     } catch (error) {
         if (error instanceof UniqueConstraintError && error.errors[0].path === 'email') {
             console.log('Email is already in use');
@@ -108,9 +108,6 @@ export const verifyAccount = async (req, res) => {
 
         user.verified = true;
         await user.save();
-
-        console.log(user);
-        
 
         return res.status(200).json({ message: "User verified" });
     } catch (error) {

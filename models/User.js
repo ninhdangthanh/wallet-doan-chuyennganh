@@ -26,7 +26,7 @@ export const User = sequelize.define(
             type: DataTypes.BIGINT,
             allowNull: true,
         },
-        verifed: {
+        verified: {
             type: DataTypes.BOOLEAN,
         }
     },
