@@ -4,43 +4,20 @@ import { system_config } from "../config.js";
 import { TxsAnalytics } from "../models/TransactionAnalytics.js";
 
 
-const provider = new ethers.providers.JsonRpcProvider(system_config.txs_query_provider_rpc);
-
-export const getTxsDetail = async (req, res) => {
+export const getLatesBlockNumber = async (req, res) => {
     try {
-        const latestBlockNumber = await provider.getBlockNumber();
-        const block = await provider.getBlock(latestBlockNumber);
-        
-        if (!block) {
-            return res.status(404).json({ message: "Block not found" });
+        const latestRecords = await TxsAnalytics.findAll({
+            limit : system_config.latest_txs_quantity_to_save,
+            order: [
+                ['id', 'DESC'],
+            ],
+        })
+
+        if (latestRecords) {
+            res.status(200).json(latestRecords[0].block_number);
+        } else {
+            res.status(404).json({ message: "Not found latest block number" });
         }
-
-        console.log(latestBlockNumber, " block ", );
-        
-
-        for (let i = 0; i < 10; i++) {
-            const tx = block.transactions[i];
-            console.log(tx);
-            
-            const txReceipt = await provider.getTransactionReceipt(tx);
-
-            const balance = await provider.getBalance(tx);
-
-            await TxsAnalytics.create({
-                tx_hash: tx.hash,
-                balance: ethers.utils.formatEther(balance),
-                gas: txReceipt.gasUsed.toString(),
-                block_number: block.number.toString(),
-            });
-        }
-
-        await TxsAnalytics.destroy({
-            where: {
-                block_number: (latestBlockNumber - 10).toString(),
-            },
-        });
-
-        res.status(200).json({ message: "Transactions saved to database" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error retrieving block information" });

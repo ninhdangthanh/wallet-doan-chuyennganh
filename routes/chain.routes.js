@@ -1,9 +1,9 @@
 import express from "express";
-import { getTxsByBlockNumber, getTxsDetail } from "../controllers/chain.controller.js"; 
+import { getTxsByBlockNumber, getLatesBlockNumber } from "../controllers/chain.controller.js"; 
 
 const router = express.Router();
 
-router.get("/block/:blockNumber", getTxsDetail); 
+router.get("/latest-block-number", getLatesBlockNumber); 
 router.get("/txs/:blockNumber", getTxsByBlockNumber); 
 
 export default router;
