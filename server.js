@@ -9,6 +9,7 @@ import { ERC20 } from './models/ERC20.js'
 import { TxsAnalytics } from "./models/TransactionAnalytics.js";
 import { query_account_balance, query_txs_of_block } from "./cronjobs.js";
 import { system_config } from "./config.js";
+import { LatestBlockInfo } from "./models/LatestBlockInfo.js";
 
 
 async function db_connect() {
@@ -19,6 +20,7 @@ async function db_connect() {
         // await Activity.sync({ force: true })
         // await ERC20.sync({ force: true })
         // await TxsAnalytics.sync({ force: true })
+        // await LatestBlockInfo.sync({force: true})
 
         // await Account.bulkCreate([
         //     {
@@ -49,8 +51,9 @@ async function main() {
     await db_connect();
 
     // setInterval(query_account_balance, system_config.txs_query_time);
-    // // await query_txs_of_block()
-    // setInterval(query_txs_of_block, system_config.time_to_query_latest_txs);
+    
+    await query_txs_of_block()
+    setInterval(query_txs_of_block, system_config.time_to_query_latest_txs);
     
     try {
         await sequelize.sync({ force: false });

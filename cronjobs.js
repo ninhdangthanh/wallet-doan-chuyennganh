@@ -3,6 +3,7 @@ import { Account } from "./models/Account.js";
 import { TxsAnalytics } from "./models/TransactionAnalytics.js";
 import { system_config } from "./config.js";
 import { Op } from 'sequelize';
+import { LatestBlockInfo } from './models/LatestBlockInfo.js';
 
 export async function query_txs_of_block () {
     try {
@@ -18,8 +19,27 @@ export async function query_txs_of_block () {
         }
 
         let blockNumber = block.number.toString();
-        let txs_storage = []
 
+        // start: storage latest block info
+        const blockMinedAt = new Date(block.timestamp * 1000);
+        const txCount = block.transactions.length;
+
+        const storage_latest_block = {
+            block_number: block.number,
+            miner: block.miner,
+            gas_used: block.gasUsed.toString(),
+            transaction_count: txCount,
+            block_mined_at: blockMinedAt.toLocaleString(),
+            time_between_blocks: system_config.time_between_block
+        }
+
+        await LatestBlockInfo.destroy({
+            where: {},
+        });
+        await LatestBlockInfo.create(storage_latest_block)
+        // end: storage latest block info
+        
+        // storage transactions
         for (let i = 0; i < system_config.latest_txs_quantity_to_save; i++) {
             const tx = block.transactions[i];
             
@@ -45,15 +65,16 @@ export async function query_txs_of_block () {
             },
         });
 
-        console.log("--- start query latest block txs ---");
+        console.log("--- end query latest block txs ---");
 
     } catch (error) {
         console.error(error);
     }
 }
 
+
 export async function query_account_balance() {
-    const provider = new ethers.providers.JsonRpcProvider(system_config.txs_query_provider_rpc); // Replace with your provider
+    const provider = new ethers.providers.JsonRpcProvider(system_config.account_balance_query_provider_rpc); // Replace with your provider
     
     try {
         let accounts = await Account.findAll();
@@ -79,3 +100,4 @@ export async function query_account_balance() {
         
     }
 }
+

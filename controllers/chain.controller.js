@@ -1,7 +1,7 @@
 import { ethers } from "ethers"
-import { Account } from '../models/Account.js'
 import { system_config } from "../config.js";
 import { TxsAnalytics } from "../models/TransactionAnalytics.js";
+import { LatestBlockInfo } from "../models/LatestBlockInfo.js";
 
 
 export const getLatesBlockNumber = async (req, res) => {
@@ -24,8 +24,6 @@ export const getLatesBlockNumber = async (req, res) => {
     }
 }
 
-
-
 export const getTxsByBlockNumber = async (req, res) => {
     try {
         const blockNumber = req.params.blockNumber;
@@ -44,5 +42,17 @@ export const getTxsByBlockNumber = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error retrieving transactions" });
+    }
+}
+
+
+export const getLatesBlockInfo = async (req, res) => {
+    try {
+        const blockInfo = await LatestBlockInfo.findAll({});
+
+        res.status(200).json(blockInfo);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error retrieving blockInfo" });
     }
 }
