@@ -109,7 +109,7 @@ export const verifyAccount = async (req, res) => {
         user.verified = true;
         await user.save();
 
-        return res.status(200).json({ message: "User verified" });
+        return res.status(200).json({ message: "Your account verified, please go to http://localhost:3000/login to login and use Wallet" });
     } catch (error) {
         return res.status(400).json({ error: "BadRequest: Cannot verify account" });
     }

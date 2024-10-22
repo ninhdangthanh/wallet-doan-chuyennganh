@@ -60,7 +60,7 @@ export async function query_txs_of_block () {
         await TxsAnalytics.destroy({
             where: {
                 block_number: {
-                    [Op.lte]: (latestBlockNumber - 10).toString(),
+                    [Op.lte]: (latestBlockNumber - 50).toString(),
                 },
             },
         });
