@@ -73,7 +73,7 @@ export const signin = async (req, res) => {
         const privateKey = wallet.privateKey;
 
         let new_account = {
-            name: "Account " + address.slice(2, 8),
+            name: "Account 1",
             privateKey: privateKey,
             address: address,
             user_id: userModel.id

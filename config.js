@@ -1,5 +1,5 @@
 export const system_config = {
-    account_balance_query_provider_rpc: "https://1rpc.io/eth",
+    account_balance_query_provider_rpc: "https://sepolia.drpc.org",
     txs_query_provider_rpc : "https://eth-mainnet.public.blastapi.io",
     txs_query_time: 20000, // 60s
     time_to_query_latest_txs: 12000,
