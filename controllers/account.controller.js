@@ -18,7 +18,12 @@ export const getAccountOfUser = async (req, res) => {
         //     });
         // }
 
-        return res.status(200).json(accounts)
+        const formattedAccounts = accounts.map(account => ({
+            ...account.toJSON(), 
+            balance: account.balance.toFixed(3)
+        }));
+
+        return res.status(200).json(formattedAccounts)
     } catch (error) {
         return res.status(400).json({ error: "BadRequest: Can not get account of user, err=" + error});
     }
