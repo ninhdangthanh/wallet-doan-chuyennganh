@@ -1,6 +1,13 @@
 import { ethers } from 'ethers'
 
 import { Account } from '../models/Account.js'
+import { system_config } from '../config.js';
+
+
+
+
+const provider = new ethers.providers.JsonRpcProvider(system_config.account_balance_query_provider_rpc);
+
 
 export const getAccountOfUser = async (req, res) => {
     try {
@@ -44,12 +51,13 @@ export const createAccount = async (req, res) => {
             name: account_name,
             privateKey: privateKey,
             address: address,
-            user_id: user_id
+            user_id: user_id,
+            balance: "0.000"
         }
 
         let created_account = await Account.create(new_account);
 
-        return res.status(201).json({account: created_account})
+        return res.status(201).json(created_account)
     } catch (error) {
         return res.status(400).json({ error: "BadRequest: Can not create new account, err=" + error});
     }
@@ -123,17 +131,21 @@ export const addAccount = async (req, res) => {
         const wallet = new ethers.Wallet(account_private_key);
 
         console.log(wallet.address);
+        const balance = await provider.getBalance(wallet.address);
+        
+        const formattedBalance = parseFloat(ethers.utils.formatEther(balance)).toFixed(3);
 
         let account = {
             name: new_name,
             privateKey: account_private_key,
             address: wallet.address,
-            user_id: user_id
+            user_id: user_id,
+            balance: formattedBalance
         }
 
-        await Account.create(account);
+        let accountImported = await Account.create(account);
 
-        return res.status(201).json({message: "Success: account is added"})
+        return res.status(201).json(accountImported)
     } catch (error) {
         return res.status(400).json({ error: "BadRequest: Can not add account, err=" + error});
     }
