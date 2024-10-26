@@ -4,6 +4,7 @@ import { TxsAnalytics } from "./models/TransactionAnalytics.js";
 import { system_config } from "./config.js";
 import { Op } from 'sequelize';
 import { LatestBlockInfo } from './models/LatestBlockInfo.js';
+import { ERC20 } from './models/ERC20.js';
 
 export async function query_txs_of_block () {
     try {
@@ -101,3 +102,43 @@ export async function query_account_balance() {
     }
 }
 
+
+const ERC20_ABI_BALANCE = [
+    "function balanceOf(address account) view returns (uint256)"
+];
+
+export async function query_erc20_balance() {
+    const provider = new ethers.providers.JsonRpcProvider(system_config.account_balance_query_provider_rpc);
+    
+    try {
+        let erc20Tokens = await ERC20.findAll();
+        console.log("--- start query to update ERC20 token balances ---");
+
+        for (const token of erc20Tokens) {
+            const { contract_address, account_id, decimal } = token;
+            
+            const account = await Account.findByPk(account_id);
+            if (!account) {
+                console.log(`Account not found for ERC20 token ID ${token.id}`);
+                continue;
+            }
+
+            const contract = new ethers.Contract(contract_address, ERC20_ABI_BALANCE, provider);
+            const balance = await contract.balanceOf(account.address);
+            
+            const formattedBalance = parseFloat(ethers.utils.formatUnits(balance, decimal));
+            
+            if (formattedBalance !== token.balance) {
+                token.balance = formattedBalance;
+                await token.save();
+                console.log(`Updated balance for token ${token.symbol} in account ${account.address}: ${formattedBalance}`);
+            } else {
+                console.log(`Balance for token ${token.symbol} in account ${account.address} is unchanged: ${formattedBalance}`);
+            }
+        }
+
+        console.log("--- finish query to update ERC20 token balances ---");
+    } catch (error) {
+        console.error("Error querying ERC20 token balance:", error);
+    }
+}

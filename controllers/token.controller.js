@@ -22,6 +22,10 @@ export const importTokenERC20 = async (req, res) => {
             }
         });
 
+        if (!account) {
+            return res.status(404).json({ error: "Account not found for this user." });
+        }
+        
         const provider = new ethers.providers.JsonRpcProvider("https://ethereum-sepolia-rpc.publicnode.com");
         const tokenContract = new ethers.Contract(token_address, erc20_abi, provider);
 
@@ -30,13 +34,17 @@ export const importTokenERC20 = async (req, res) => {
         const symbol = await tokenContract.symbol();
         // console.log(name, decimals, symbol);
 
+        const rawBalance = await tokenContract.balanceOf(account.address);
+        const formattedBalance = parseFloat(ethers.utils.formatUnits(rawBalance, decimals));
+
         const new_erc20_token = {
             name: name,
             contract_address: token_address,
             symbol: symbol,
             decimal: decimals,
             account_id: account.id,
-            network_id: 1
+            network_id: 1,
+            balance: formattedBalance,   
         }
 
         // console.log(new_erc20_token);

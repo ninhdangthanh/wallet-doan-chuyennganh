@@ -22,6 +22,10 @@ export const ERC20 = sequelize.define(
         decimal: {
             type: DataTypes.INTEGER,
         },
+        balance: {
+            type: DataTypes.FLOAT,
+            default: 0
+        },
         account_id: {
             type: DataTypes.INTEGER,
             unique: 'erc20token',
