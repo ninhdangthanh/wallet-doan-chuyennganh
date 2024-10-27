@@ -22,7 +22,7 @@ router.use("/api/auth", authRoutes);
 router.use("/api/account", authenticateToken, accountRoutes);
 router.use("/api/coin", authenticateToken, coinRoutes);
 router.use("/api/token", tokenRoutes);
-router.use("/api/activities", activityRoutes);
+router.use("/api/activities", authenticateToken, activityRoutes);
 router.use("/api/chain", chainRoutes);
 
 export default router;

@@ -1,10 +1,15 @@
 import { Op } from "sequelize";
 import { Activity } from "../models/Activity.js";
+import { Account } from "../models/Account.js";
 
 export const createActivity = async (req, res) => {
     try {
-        const newActivity = await Activity.create(req.body);
-        res.status(201).json(newActivity);
+        const user_id = req.user.id
+        let newActivity = req.body
+        newActivity.user_id = user_id;
+
+        const created = await Activity.create(req.body);
+        res.status(201).json(created);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -21,7 +26,17 @@ export const getAllActivities = async (req, res) => {
 
 export const getActivitiesOfAccount = async (req, res) => {
     try {
-        let account_address = req.body.id;
+        const user_id = req.user.id;
+        console.log("user_id", user_id);
+        
+
+        const account = await Account.findOne({ where: { user_id } });
+        
+        if (!account) {
+            return res.status(404).json({ message: "Account not found for the specified user" });
+        }
+        
+        const account_address = account.address;
 
         const activities = await Activity.findAll({
             where: {

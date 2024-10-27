@@ -142,3 +142,42 @@ export async function query_erc20_balance() {
         console.error("Error querying ERC20 token balance:", error);
     }
 }
+
+
+export async function query_pending_activities() {
+    const provider = new ethers.providers.JsonRpcProvider(system_config.account_balance_query_provider_rpc);
+
+    try {
+        console.log("--- Start querying pending activities ---");
+        
+        const pendingActivities = await Activity.findAll({
+            where: { status: "PENDING" }
+        });
+        
+        for (const activity of pendingActivities) {
+            const txHash = activity.tx_hash;
+            
+            try {
+                const receipt = await provider.getTransactionReceipt(txHash);
+                
+                if (receipt) {
+                    if (receipt.status === 1) {
+                        activity.status = "SUCCESS";
+                    } else {
+                        activity.status = "FAILED";
+                    }
+                    await activity.save();
+                    console.log(`Updated status for tx ${txHash}: ${activity.status}`);
+                } else {
+                    console.log(`Transaction ${txHash} is still pending`);
+                }
+            } catch (txError) {
+                console.error(`Error fetching transaction ${txHash}:`, txError);
+            }
+        }
+
+        console.log("--- Finished querying pending activities ---");
+    } catch (error) {
+        console.error("Error querying pending activities:", error);
+    }
+}
