@@ -7,7 +7,7 @@ import { User } from './models/User.js'
 import { Activity } from './models/Activity.js'
 import { ERC20 } from './models/ERC20.js'
 import { TxsAnalytics } from "./models/TransactionAnalytics.js";
-import { query_account_balance, query_erc20_balance, query_txs_of_block } from "./cronjobs.js";
+import { query_account_balance, query_erc20_balance, query_pending_activities, query_txs_of_block } from "./cronjobs.js";
 import { system_config } from "./config.js";
 import { LatestBlockInfo } from "./models/LatestBlockInfo.js";
 
@@ -53,8 +53,10 @@ async function main() {
     // setInterval(query_account_balance, system_config.txs_query_time);
     
     // // await query_txs_of_block()
-    // setInterval(query_txs_of_block, system_config.time_to_query_latest_txs);
-    setInterval(query_erc20_balance, 2000);
+    // setInterval(query_txs_of_block, 6000);
+    // setInterval(query_erc20_balance, 2000);
+    // setInterval(query_pending_activities, 5000);
+    
     
     
     try {

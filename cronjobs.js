@@ -5,6 +5,7 @@ import { system_config } from "./config.js";
 import { Op } from 'sequelize';
 import { LatestBlockInfo } from './models/LatestBlockInfo.js';
 import { ERC20 } from './models/ERC20.js';
+import { Activity } from './models/Activity.js';
 
 export async function query_txs_of_block () {
     try {
@@ -145,7 +146,7 @@ export async function query_erc20_balance() {
 
 
 export async function query_pending_activities() {
-    const provider = new ethers.providers.JsonRpcProvider(system_config.account_balance_query_provider_rpc);
+    const provider = new ethers.providers.JsonRpcProvider(system_config.query_txs_status_rpc);
 
     try {
         console.log("--- Start querying pending activities ---");

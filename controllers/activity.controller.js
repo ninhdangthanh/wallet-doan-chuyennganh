@@ -15,36 +15,26 @@ export const createActivity = async (req, res) => {
     }
 };
 
-export const getAllActivities = async (req, res) => {
-    try {
-        const activities = await Activity.findAll();
-        res.status(200).json(activities);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
 export const getActivitiesOfAccount = async (req, res) => {
     try {
-        const user_id = req.user.id;
-        console.log("user_id", user_id);
-        
+        let accountId = req.params.accountId
 
-        const account = await Account.findOne({ where: { user_id } });
+        const account = await Account.findOne({ where: { id: accountId } });
         
         if (!account) {
             return res.status(404).json({ message: "Account not found for the specified user" });
         }
         
         const account_address = account.address;
-
+        
         const activities = await Activity.findAll({
             where: {
                 [Op.or]: [
-                    { from: account_address },
+                    { account_id: accountId },
                     { to: account_address }
                 ]
-            }
+            },
+            order: [['createdAt', 'DESC']]
         });
 
         res.status(200).json(activities);
@@ -57,6 +47,8 @@ export const getActivitiesOfAccount = async (req, res) => {
 
 export const getActivityById = async (req, res) => {
     try {
+        console.log("detail");
+        
         const activity = await Activity.findByPk(req.params.id);
         if (activity) {
             res.status(200).json(activity);
