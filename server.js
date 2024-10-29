@@ -1,4 +1,4 @@
-import app from "./app.js";
+import {app, server as serverWs} from "./app.js";
 import { sequelize } from "./db/database.js";
 
 
@@ -47,6 +47,7 @@ async function db_connect() {
 
 async function main() {
     const port = 5000;
+    const portWs = 3001;
 
     await db_connect();
 
@@ -64,6 +65,10 @@ async function main() {
         app.listen(port, () => {
             console.log(`\nServer is listening on port ${port}, http://localhost:${port}`);
         });
+        serverWs.listen(portWs, () => {
+            console.log(`Server WS is running on http://localhost:${portWs}`);
+        });
+
     } catch (error) {
         console.error("Unable to connect to the database:", error);
     }
