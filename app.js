@@ -25,7 +25,15 @@ wss.on("connection", (ws) => {
     console.log("New WebSocket connection");
 
     ws.on("message", (message) => {
-        console.log(`Received message: ${message}`);
+        console.log(`START: Received message`);
+        console.log(`type ${message.type}`);
+        console.log(`tx_hash ${message.tx_hash}`);
+        console.log(`from ${message.from}`);
+        console.log(`to ${message.to}`);
+        console.log(`END: Received message`);
+
+
+        
         wss.clients.forEach((client) => {
         if (client.readyState === ws.OPEN) {
             client.send(`Server received: ${message}`);

@@ -66,7 +66,7 @@ async function main() {
             console.log(`\nServer is listening on port ${port}, http://localhost:${port}`);
         });
         serverWs.listen(portWs, () => {
-            console.log(`Server WS is running on http://localhost:${portWs}`);
+            console.log(`Server WS is running on ws://localhost:${portWs}`);
         });
 
     } catch (error) {
