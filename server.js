@@ -50,7 +50,7 @@ async function main() {
 
     await db_connect();
 
-    // setInterval(query_account_balance, system_config.txs_query_time);
+    setInterval(query_account_balance, 4000);
     
     // // await query_txs_of_block()
     // setInterval(query_txs_of_block, 6000);

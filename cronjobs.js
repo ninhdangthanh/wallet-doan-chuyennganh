@@ -88,8 +88,8 @@ export async function query_account_balance() {
             const balanceInEth = ethers.utils.formatEther(currentBalance);
             
 
-            if (parseFloat(balanceInEth) !== account.balance) {
-                account.balance = parseFloat(balanceInEth);
+            if (formatEthBalance(balanceInEth) !== account.balance) {
+                account.balance = formatEthBalance(balanceInEth);
                 await account.save();
                 // console.log(`Updated balance for ${address}: ${balanceInEth} ETH`);
             } else {
@@ -182,3 +182,9 @@ export async function query_pending_activities() {
         console.error("Error querying pending activities:", error);
     }
 }
+
+export function formatEthBalance(balance) {
+    const numBalance = typeof balance === "string" ? parseFloat(balance) : balance;
+    return numBalance.toFixed(3);
+  }
+  

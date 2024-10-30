@@ -27,7 +27,7 @@ export const getAccountOfUser = async (req, res) => {
 
         const formattedAccounts = accounts.map(account => ({
             ...account.toJSON(), 
-            balance: account.balance.toFixed(3)
+            balance: formatEthBalance(account.balance)
         }));
 
         return res.status(200).json(formattedAccounts)
@@ -133,7 +133,7 @@ export const addAccount = async (req, res) => {
         console.log(wallet.address);
         const balance = await provider.getBalance(wallet.address);
         
-        const formattedBalance = parseFloat(ethers.utils.formatEther(balance)).toFixed(3);
+        const formattedBalance = formatEthBalance(ethers.utils.formatEther(balance));
 
         let account = {
             name: new_name,
@@ -150,3 +150,9 @@ export const addAccount = async (req, res) => {
         return res.status(400).json({ error: "BadRequest: Can not add account, err=" + error});
     }
 } 
+
+export function formatEthBalance(balance) {
+    const numBalance = typeof balance === "string" ? parseFloat(balance) : balance;
+    return numBalance.toFixed(3);
+  }
+  
