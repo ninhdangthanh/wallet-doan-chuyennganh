@@ -10,7 +10,7 @@ import {
 const router = express.Router();
 
 router.post("", createActivity); // Create a new activity
-router.get("/:accountId", getActivitiesOfAccount); // Get all activities
+router.get("/account/:accountId/activities", getActivitiesOfAccount);
 router.get("/:id", getActivityById); // Get an activity by ID
 router.put("/:id", updateActivity); // Update an activity by ID
 router.delete("/:id", deleteActivity); // Delete an activity by ID

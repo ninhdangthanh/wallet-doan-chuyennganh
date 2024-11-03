@@ -15,9 +15,16 @@ export const createActivity = async (req, res) => {
     }
 };
 
+
 export const getActivitiesOfAccount = async (req, res) => {
     try {
-        let accountId = req.params.accountId
+        const accountId = req.params.accountId;
+        const { page = 1, pageSize = 10, type, status } = req.query; // Pagination and filters from query params
+        // console.log("accountId", accountId, req.query);
+        
+
+        const limit = parseInt(pageSize, 10) || 10; // Default pageSize to 10 if not provided
+        const offset = (parseInt(page, 10) - 1) * limit; // Calculate offset for pagination
 
         const account = await Account.findOne({ where: { id: accountId } });
         
@@ -26,29 +33,47 @@ export const getActivitiesOfAccount = async (req, res) => {
         }
         
         const account_address = account.address;
-        
+
+        const whereCondition = {
+            [Op.or]: [{ account_id: accountId }, { to: account_address }]
+        };
+
+        if (type === 'Receive') {
+            whereCondition.to = account_address;
+        } else if (type === 'Transfer') {
+            whereCondition.from = account_address;
+        }
+
+        if (status) {
+            whereCondition.status = status.toUpperCase(); // Ensure the status matches the ENUM (e.g., 'FAILED', 'PENDING', 'SUCCESS')
+        }
+
         const activities = await Activity.findAll({
-            where: {
-                [Op.or]: [
-                    { account_id: accountId },
-                    { to: account_address }
-                ]
-            },
+            where: whereCondition,
+            limit,
+            offset,
             order: [['createdAt', 'DESC']]
         });
 
-        res.status(200).json(activities);
+        const totalCount = await Activity.count({ where: whereCondition });
+
+        res.status(200).json({
+            data: activities,
+            pagination: {
+                currentPage: parseInt(page, 10),
+                pageSize: limit,
+                totalItems: totalCount,
+                totalPages: Math.ceil(totalCount / limit),
+            }
+        });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: `Error fetching activities: ${error.message}` });
     }
 };
 
 
-
 export const getActivityById = async (req, res) => {
     try {
-        console.log("detail");
-        
         const activity = await Activity.findByPk(req.params.id);
         if (activity) {
             res.status(200).json(activity);
