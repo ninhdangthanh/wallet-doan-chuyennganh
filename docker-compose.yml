@@ -11,4 +11,19 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./.pg_data:/var/lib/postgresql/data
+      - ./../.pg_data:/var/lib/postgresql/data
+
+  app:
+    container_name: u2mya-wallet-be
+    image: u2mya-wallet-be:latest
+    build:
+      context: . 
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"  
+    environment:
+      - DB_NAME=wallet-doan-backend
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_HOST=admin-db
+    command: ["node", "server.js"]  

@@ -7,7 +7,7 @@ import { User } from './models/User.js'
 import { Activity } from './models/Activity.js'
 import { ERC20 } from './models/ERC20.js'
 import { TxsAnalytics } from "./models/TransactionAnalytics.js";
-import { query_account_balance, query_erc20_balance, query_pending_activities, query_txs_of_block } from "./cronjobs.js";
+import { query_account_balance, query_erc20_balance, query_pending_activities } from "./cronjobs.js";
 import { system_config } from "./config.js";
 import { LatestBlockInfo } from "./models/LatestBlockInfo.js";
 
@@ -15,12 +15,11 @@ import { LatestBlockInfo } from "./models/LatestBlockInfo.js";
 async function db_connect() {
     try {
         await sequelize.authenticate()
-        // await User.sync({ force: true }) 
-        // await Account.sync({ force: true })
-        // await Activity.sync({ force: true })
-        // await ERC20.sync({ force: true })
-        // await TxsAnalytics.sync({ force: true })
-        // await LatestBlockInfo.sync({force: true})
+        await User.sync({ force: true }) 
+        await Account.sync({ force: true })
+        await Activity.sync({ force: true })
+        await ERC20.sync({ force: true })
+        await LatestBlockInfo.sync({force: true})
 
         // await Account.bulkCreate([
         //     {
@@ -50,14 +49,9 @@ async function main() {
 
     await db_connect();
 
-    setInterval(query_account_balance, 4000);
-    
-    // // await query_txs_of_block()
-    // setInterval(query_txs_of_block, 6000);
-    // setInterval(query_erc20_balance, 2000);
-    // setInterval(query_pending_activities, 5000);
-    
-    
+    setInterval(query_account_balance, 6000);
+    setInterval(query_erc20_balance, 2000);
+    setInterval(query_pending_activities, 5000);
     
     try {
         await sequelize.sync({ force: false });
