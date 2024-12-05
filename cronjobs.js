@@ -185,6 +185,6 @@ export async function query_pending_activities() {
 
 export function formatEthBalance(balance) {
     const numBalance = typeof balance === "string" ? parseFloat(balance) : balance;
-    return numBalance.toFixed(3);
+    return numBalance;
   }
   

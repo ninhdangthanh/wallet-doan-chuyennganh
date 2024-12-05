@@ -153,6 +153,6 @@ export const addAccount = async (req, res) => {
 
 export function formatEthBalance(balance) {
     const numBalance = typeof balance === "string" ? parseFloat(balance) : balance;
-    return numBalance.toFixed(3);
+    return numBalance;
   }
   
