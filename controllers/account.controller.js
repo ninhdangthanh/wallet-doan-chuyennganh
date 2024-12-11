@@ -16,7 +16,8 @@ export const getAccountOfUser = async (req, res) => {
         const accounts = await Account.findAll({
             where: {
                 user_id: user_id
-            }
+            },
+            order: [['id', 'ASC']] 
         });
 
         // if (accounts) {
