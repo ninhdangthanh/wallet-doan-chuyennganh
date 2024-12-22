@@ -2,8 +2,8 @@ import { ethers } from 'ethers'
 
 import { Account } from '../models/Account.js'
 import { system_config } from '../config.js';
-
-
+import { User } from '../models/User.js';
+import bcrypt from 'bcrypt';
 
 
 const provider = new ethers.providers.JsonRpcProvider(system_config.account_balance_query_provider_rpc);
@@ -151,6 +151,40 @@ export const addAccount = async (req, res) => {
         return res.status(400).json({ error: "BadRequest: Can not add account, err=" + error});
     }
 } 
+
+export const showPrivateKey = async (req, res) => {
+    try {
+        let user_id = req.user.id;
+        let {password, account_id} = req.body;
+
+        const account = await Account.findOne({
+            where: {
+                id: account_id,
+                user_id: user_id
+            },
+        });
+
+        const user = await User.findOne({
+            where: {
+                id: user_id,
+            }
+        })
+
+        console.log("user", user.password);
+        
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        console.log("isPasswordMatch", isPasswordMatch);
+        
+
+        if (isPasswordMatch) {
+            return res.status(200).json(account.privateKey)
+        } else {
+            return res.status(400).json("Password not match!")
+        }
+    } catch (error) {
+        return res.status(400).json({ error: "BadRequest: Can not get account of user, err=" + error});
+    }
+}
 
 export function formatEthBalance(balance) {
     const numBalance = typeof balance === "string" ? parseFloat(balance) : balance;
