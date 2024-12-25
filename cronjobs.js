@@ -188,3 +188,44 @@ export function formatEthBalance(balance) {
     return numBalance;
   }
   
+
+export async function query_latest_block_info() {
+    const provider = new ethers.providers.JsonRpcProvider(system_config.account_balance_query_provider_rpc); // Replace with your provider
+
+    try {
+        const latestBlock = await provider.getBlock("latest");
+        const {
+            number: blockNumber,
+            miner,
+            gasUsed,
+            transactions,
+            timestamp,
+        } = latestBlock;
+
+        const blockMinedAt = new Date(timestamp * 1000).toISOString();
+
+        const timeBetweenBlocks = `12 seconds`;
+
+        const [blockInfo, created] = await LatestBlockInfo.findOrCreate({
+            where: { block_number: blockNumber },
+            defaults: {
+                miner,
+                gas_used: gasUsed.toString(),
+                transaction_count: transactions.length,
+                block_mined_at: blockMinedAt,
+                time_between_blocks: timeBetweenBlocks,
+            },
+        });
+
+        if (!created) {
+            blockInfo.miner = miner;
+            blockInfo.gas_used = gasUsed.toString();
+            blockInfo.transaction_count = transactions.length;
+            blockInfo.block_mined_at = blockMinedAt;
+            blockInfo.time_between_blocks = timeBetweenBlocks;
+            await blockInfo.save();
+        }
+    } catch (error) {
+        console.error("Error querying the latest block info:", error.message);
+    }
+}
